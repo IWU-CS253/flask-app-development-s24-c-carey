@@ -13,6 +13,7 @@
   </form>
     <form action= "{{ url_for('show_entries') }}" method="get">
         <select name = "cat_filter">
+            <option value="all" selected> See all </option>
             {% for option in options %}
             <option value = "{{ option.category }}"> {{ option.category }}</option>
             {% endfor %}

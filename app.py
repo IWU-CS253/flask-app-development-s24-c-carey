@@ -72,7 +72,7 @@ def show_entries():
     entries = cur.fetchall()
     cat_filter = request.args.get('cat_filter')
     options = db.execute('select distinct category from entries').fetchall()
-    if cat_filter:
+    if cat_filter != "all":
         filtered = db.execute("select title, text, category from entries"
                               " where category = ? order by id desc", [cat_filter])
         filtered_entries = filtered.fetchall()
