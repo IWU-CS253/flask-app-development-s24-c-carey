@@ -70,17 +70,15 @@ def show_entries():
     db = get_db()
     cur = db.execute('select title, text, category from entries order by id desc')
     entries = cur.fetchall()
-    return render_template('show_entries.html', entries=entries)
-
-
-@app.route('/', methods=['GET'])
-def filter_entries():
-    db = get_db()
-    filter_category = request.args.get('filter')
+    cat_filter = request.args.get('cat_filter')
     options = db.execute('select distinct category from entries').fetchall()
-    filtered = db.execute("select title, text, category from entries where category = ? order by id desc", filter_category)
-    filtered_entries = filtered.fetchall()
-    return render_template('show_entries.html', entries=filtered_entries, options=options)
+    if cat_filter:
+        filtered = db.execute("select title, text, category from entries"
+                              " where category = ? order by id desc", [cat_filter])
+        filtered_entries = filtered.fetchall()
+        return render_template('show_entries.html', entries=filtered_entries, options=options)
+    else:
+        return render_template('show_entries.html', entries=entries, options=options)
 
 
 @app.route('/add', methods=['POST'])

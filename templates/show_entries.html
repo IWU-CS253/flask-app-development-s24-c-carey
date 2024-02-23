@@ -11,10 +11,10 @@
       <dd><input type="submit" value="Share">
     </dl>
   </form>
-    <form action= "{{ url_for('filter_entries') }}">
-        <select name = "filter" id = "filter">
+    <form action= "{{ url_for('show_entries') }}" method="get">
+        <select name = "cat_filter">
             {% for option in options %}
-            <option> {{ option }}</option>
+            <option value = "{{ option.category }}"> {{ option.category }}</option>
             {% endfor %}
         </select>
         <button type = "submit">Filter</button>
