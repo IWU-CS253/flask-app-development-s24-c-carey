@@ -13,6 +13,7 @@
   </form>
     <form action= "{{ url_for('show_entries') }}" method="get">
         <select name = "cat_filter">
+            <option value="all" selected> See all </option>
             {% for option in options %}
             <option value = "{{ option.category }}"> {{ option.category }}</option>
             {% endfor %}
@@ -22,6 +23,10 @@
   <ul class="entries">
   {% for entry in entries %}
     <li><h2>{{ entry.title }}</h2><h3>{{ entry.category }}</h3>{{ entry.text|safe }}</li>
+        <form action="/delete" method="post">
+            <input name="id" type="hidden" value="{{ entry.id }}">
+            <input type="submit" value="Delete">
+        </form>
   {% else %}
     <li><em>Unbelievable.  No entries here so far</em></li>
   {% endfor %}
