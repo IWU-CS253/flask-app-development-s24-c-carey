@@ -93,6 +93,26 @@ def add_entry():
     return redirect(url_for('show_entries'))
 
 
+@app.route('/edit', methods=['POST'])
+def edit():
+    db = get_db()
+    id = request.form.get('id')
+    entry = db.execute('select id, title, text, category from entries where id = ?', [id]).fetchall()
+    db.commit()
+    return render_template('edit_entry.html', id = id, entry = entry)
+
+
+@app.route('/', methods=['POST'])
+def edit_entry():
+    db = get_db()
+    id = request.form.get('id')
+    if id:
+        db.execute('update entries set title = ?, text = ?, category = ? where id = ?',
+                   [request.form['title'], request.form['text'], request.form['category'], id])
+        db.commit()
+    return redirect(url_for('show_entries'))
+
+
 @app.route('/delete', methods=['POST'])
 def delete_entry():
     db = get_db()

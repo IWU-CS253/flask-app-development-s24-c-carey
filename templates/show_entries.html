@@ -5,7 +5,7 @@
       <dt>Title:
       <dd><input type="text" size="30" name="title">
         <dt> Category: </dt>
-        <dd><input type = "text" name = "category"</dd>
+        <dd><input type = "text" name = "category"></dd>
       <dt>Text:
       <dd><textarea name="text" rows="5" cols="40"></textarea>
       <dd><input type="submit" value="Share">
@@ -23,6 +23,10 @@
   <ul class="entries">
   {% for entry in entries %}
     <li><h2>{{ entry.title }}</h2><h3>{{ entry.category }}</h3>{{ entry.text|safe }}</li>
+        <form action="{{ url_for('edit') }}" method="post">
+            <input name="id" type="hidden" value="{{ entry.id }}">
+            <input type="submit" value="Edit">
+        </form>
         <form action="/delete" method="post">
             <input name="id" type="hidden" value="{{ entry.id }}">
             <input type="submit" value="Delete">
