@@ -1,0 +1,20 @@
+{% extends "layout.html" %}
+
+{% block body %}
+    <form action="{{ url_for('edit_entry') }}" method="post">
+        <div class="mb-3">
+            <label for="title" class="form-label">Title: </label>
+            <input type="text" value="{{ entry[0].title }}" size="30" name="title" id="title" class="form-control">
+        </div>
+        <div class="mb-3">
+            <label for="category" class="form-label"> Category: </label>
+            <input type="text" name="category" id="category" value="{{ entry[0].category }}" class="form-control">
+        </div>
+        <div>
+            <label for="text" class="form-label">Text: </label>
+            <textarea name="text" id="text" rows="5" cols="40" class="form-control">{{ entry[0].text }}</textarea>
+        </div>
+        <input name="id" type="hidden" value="{{ entry[0].id }}">
+        <input type="submit" value="Post" class="btn btn-primary">
+    </form>
+{% endblock %}
