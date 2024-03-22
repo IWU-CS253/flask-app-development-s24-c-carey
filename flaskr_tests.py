@@ -32,6 +32,8 @@ class FlaskrTestCase(unittest.TestCase):
         assert b'<strong>HTML</strong> allowed here' in rv.data
         assert b'A category' in rv.data
 
+# I do not understand the unit tests!!! I don't particularly understand how the pre-written ones are working,
+# let alone how to write more myself. I don't understand how the existing ones work well enough to write my own.
     def test_edit(self):
         pass
 

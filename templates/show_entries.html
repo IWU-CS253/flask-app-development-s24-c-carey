@@ -1,16 +1,21 @@
 {% extends "layout.html" %}
 {% block body %}
   <form action="{{ url_for('add_entry') }}" method="post" class="add-entry">
-    <dl>
-      <dt>Title:
-      <dd><input type="text" size="30" name="title">
-        <dt> Category: </dt>
-        <dd><input type = "text" name = "category"></dd>
-      <dt>Text:
-      <dd><textarea name="text" rows="5" cols="40"></textarea>
-      <dd><input type="submit" value="Share">
-    </dl>
+      <div class="mb-3 mt-3">
+          <label for="title" class="form-label">Title: </label>
+          <input type="text" size="30" name="title" id="title" class="form-control">
+      </div>
+      <div class="mb-3">
+          <label for="category" class="form-label"> Category: </label>
+          <input type="text" name="category" id="category" class="form-control">
+      </div>
+      <div class="mb-3">
+          <label for="text" class="form-label">Text: </label>
+          <textarea name="text" id="text" rows="5" cols="40" class="form-control"></textarea>
+      </div>
+      <button type="submit" class="btn btn-primary"> Share </button>
   </form>
+
     <form action= "{{ url_for('show_entries') }}" method="get">
         <select name = "cat_filter">
             <option value="all" selected> See all </option>
@@ -18,21 +23,34 @@
             <option value = "{{ option.category }}"> {{ option.category }}</option>
             {% endfor %}
         </select>
-        <button type = "submit">Filter</button>
+        <button type = "submit" class="btn btn-primary">Filter</button>
     </form>
-  <ul class="entries">
-  {% for entry in entries %}
-    <li><h2>{{ entry.title }}</h2><h3>{{ entry.category }}</h3>{{ entry.text|safe }}</li>
-        <form action="{{ url_for('edit') }}" method="post">
-            <input name="id" type="hidden" value="{{ entry.id }}">
-            <input type="submit" value="Edit">
-        </form>
-        <form action="/delete" method="post">
-            <input name="id" type="hidden" value="{{ entry.id }}">
-            <input type="submit" value="Delete">
-        </form>
-  {% else %}
-    <li><em>Unbelievable.  No entries here so far</em></li>
-  {% endfor %}
-  </ul>
+
+    <div class="container pt-5">
+        {% for entry in entries %}
+            <div class="pt-5 pb-5 border border-info">
+            <div class="row p-2">
+                <div class="col-4"> <h2> {{ entry.title }} </h2></div>
+                <div class="col-4 text-muted"> <h5> {{ entry.category }} </h5></div>
+                <div class="col-2">
+                    <form action="{{ url_for('edit') }}" method="post">
+                        <input name="id" type="hidden" value="{{ entry.id }}">
+                        <button type="submit" class="btn btn-primary"> Edit </button>
+                    </form>
+                </div>
+                <div class="col-2">
+                    <form action="/delete" method="post">
+                        <input name="id" type="hidden" value="{{ entry.id }}">
+                        <button type="submit" class="btn btn-danger"> Delete </button>
+                    </form>
+                </div>
+            </div>
+            <div class="row p-5">
+                {{ entry.text|safe }}
+            </div>
+            </div>
+        {% else %}
+        <em>Unbelievable.  No entries here so far</em>
+        {% endfor %}
+    </div>
 {% endblock %}
